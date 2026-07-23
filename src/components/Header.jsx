@@ -30,12 +30,12 @@ const Header = () => {
       </div>
 
       {/* Main Header */}
-      <header className={`sticky top-0 w-full z-40 transition-colors duration-300 ${isScrolled ? 'bg-darker/95 backdrop-blur-md shadow-xl border-b border-white/10' : 'bg-darker/70 backdrop-blur-sm'} py-2`}>
+      <header className={`sticky top-0 w-full z-40 transition-colors duration-300 ${isScrolled ? 'bg-darker/95 backdrop-blur-md shadow-xl border-b border-white/10' : 'bg-darker/70 backdrop-blur-sm'} py-3`}>
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
           
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 relative z-50">
-            <img src={logoImg} alt="Hibachi Coal House" className="h-16 md:h-20 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.7)] transition-transform duration-300 hover:scale-105" />
+            <img src={logoImg} alt="Hibachi Coal House" className="h-20 md:h-24 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.7)] transition-transform duration-300 hover:scale-105" />
           </Link>
 
           {/* Desktop Nav & Menu Toggle */}
