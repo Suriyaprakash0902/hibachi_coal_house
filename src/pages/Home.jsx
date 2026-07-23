@@ -1,53 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Flame, ArrowRight, Star, Loader2, Utensils, Clock, MapPin, Phone, Plus } from 'lucide-react';
+import React from 'react';
+import { Flame, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import api from '../api';
 import insideImg from '../assets/images/inside.jpg';
 import storeImg from '../assets/images/store.jpg';
-import OurStrength from '../components/OurStrength';
-import AboutUs from '../components/AboutUs';
-import Gallery from '../components/Gallery';
-import Testimonials from '../components/Testimonials';
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [banners, setBanners] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [activeBanner, setActiveBanner] = useState(0);
-
-  const getImageUrl = (url) => {
-    if (!url) return '';
-    if (url.startsWith('/storage')) return `https://vazhithunai.ai/backend2/public${url}`;
-    return url;
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [prodRes, bannerRes] = await Promise.all([
-          api.get('/products'),
-          api.get('/admin/banners') // In a real app, you'd use a public endpoint for banners, but this works since no auth middleware is fully strict yet.
-        ]);
-        setProducts(prodRes.data.slice(0, 6)); 
-        setBanners(bannerRes.data.filter(b => b.status));
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  // Auto-slide banners
-  useEffect(() => {
-    if (banners.length <= 1) return;
-    const interval = setInterval(() => {
-      setActiveBanner(prev => (prev + 1) % banners.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [banners.length]);
-  
   return (
     <div className="overflow-x-hidden bg-dark">
       
@@ -83,82 +40,29 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Info Strip */}
-      <section className="bg-darker text-light py-8 border-y border-gray/50 shadow-inner z-20 relative -mt-4">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-around items-center gap-6 font-bold uppercase tracking-wider text-sm md:text-base">
-          <div className="flex items-center gap-3 text-primary"><Clock size={24} /> <span className="text-light">12:00 PM – 4:00 PM & 6:00 PM – 11:00 PM</span></div>
-          <div className="hidden md:block w-1.5 h-1.5 bg-gray rounded-full"></div>
-          <div className="flex items-center gap-3 text-primary"><MapPin size={24} /> <span className="text-light text-center">Sivagnanam St, Pondy Bazaar, Chennai</span></div>
-          <div className="hidden md:block w-1.5 h-1.5 bg-gray rounded-full"></div>
-          <div className="flex items-center gap-3 text-primary"><Phone size={24} /> <span className="text-light">095143 11128</span></div>
+      {/* Popular Picks Section - Directs to Menu Page */}
+      <section className="py-20 px-4 max-w-7xl mx-auto relative" id="menu">
+        <div className="bg-gradient-to-r from-darker via-dark to-darker rounded-3xl p-10 md:p-16 border border-white/10 shadow-2xl relative overflow-hidden text-center">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+          <span className="text-primary font-serif tracking-[0.3em] uppercase text-xs md:text-sm font-bold mb-3 inline-block border-b border-primary/30 pb-1">
+            Taste The Smoke & Flame
+          </span>
+          <h2 className="text-4xl md:text-6xl font-serif font-black text-white mb-6 uppercase tracking-wider">
+            Popular <span className="text-primary">Picks</span>
+          </h2>
+          <p className="text-light/70 max-w-2xl mx-auto text-base md:text-lg mb-8 font-sans leading-relaxed">
+            Discover our chef's signature coal-fired specialties, crafted with rich spices and authentic grilling techniques.
+          </p>
+          <Link 
+            to="/menu" 
+            className="inline-flex items-center gap-3 bg-primary hover:bg-primary-dark text-darker font-sans font-bold uppercase tracking-widest px-8 py-4 rounded-full transition-all duration-300 transform hover:-translate-y-1 shadow-[0_0_25px_rgba(255,184,0,0.4)] hover:shadow-[0_0_35px_rgba(255,184,0,0.6)] text-sm md:text-base"
+          >
+            <span>Explore Popular Picks Menu</span>
+            <ArrowRight size={20} />
+          </Link>
         </div>
       </section>
 
-      {/* Popular Picks Section */}
-      <section className="py-24 px-4 max-w-7xl mx-auto relative" id="menu">
-        <div className="text-center mb-16 relative z-10">
-          <h2 className="text-4xl md:text-5xl font-black uppercase tracking-widest mb-4">Popular <span className="text-primary">Picks</span></h2>
-          <div className="w-24 h-1.5 bg-primary mx-auto rounded"></div>
-        </div>
-        
-        {loading ? (
-          <div className="flex justify-center items-center h-48">
-            <Loader2 className="animate-spin text-primary" size={48} />
-          </div>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-              {products.map((product) => (
-              <div key={product.id} className="bg-darker rounded-3xl overflow-hidden border border-white/5 hover:border-primary/30 transition-all duration-500 group shadow-lg hover:shadow-[0_0_40px_rgba(255,184,0,0.15)] transform hover:-translate-y-2 flex flex-col relative">
-                
-                {/* Image Container with Gradient Overlay */}
-                <div className="h-64 bg-dark relative overflow-hidden">
-                  <img 
-                    src={getImageUrl(product.image) || `https://via.placeholder.com/600x400.png/141414/FFB800?text=${encodeURIComponent(product.name)}`} 
-                    alt={product.name}
-                    className="w-full h-full object-cover z-0 group-hover:scale-110 group-hover:rotate-1 transition-transform duration-700 ease-in-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-darker via-darker/20 to-transparent z-10"></div>
-                  
-                  {/* Veg/Non-veg beautifully styled tag */}
-                  {product.is_veg ? (
-                    <div className="absolute top-4 right-4 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-green-500/30 z-20 flex items-center gap-2 shadow-xl">
-                      <Star size={12} className="text-green-500 fill-green-500" />
-                      <span className="text-xs font-bold text-green-500 uppercase tracking-widest">Veg</span>
-                    </div>
-                  ) : (
-                    <div className="absolute top-4 right-4 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-red-500/30 z-20 flex items-center gap-2 shadow-xl">
-                      <Star size={12} className="text-red-500 fill-red-500" />
-                      <span className="text-xs font-bold text-red-500 uppercase tracking-widest">Non-Veg</span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Content Area */}
-                <div className="p-6 relative z-20 flex-1 flex flex-col -mt-12 bg-gradient-to-b from-transparent via-darker to-darker">
-                  <div className="bg-primary/10 text-primary w-max px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest mb-3 border border-primary/20 backdrop-blur-sm shadow-sm">
-                    {product.category?.name || 'Chef Special'}
-                  </div>
-                  
-                  <h3 className="text-2xl font-black text-white mb-2 tracking-tight group-hover:text-primary transition-colors">{product.name}</h3>
-                  <p className="text-light/50 text-sm leading-relaxed mb-6 flex-1 font-medium">{product.description || 'Prepared with our signature blend of spices and coal-fired to perfection.'}</p>
-                </div>
-              </div>
-              ))}
-            </div>
-          </>
-        )}
-        
-        <div className="text-center mt-16">
-           <Link to="/menu" className="inline-block border-b-2 border-primary text-light hover:text-primary pb-1 font-bold tracking-widest uppercase transition-colors">
-              View Entire Collection
-           </Link>
-        </div>
-      </section>
-
-      <OurStrength />
-      <AboutUs />
-      
       {/* Ambiance Section */}
       <section className="py-24 bg-darker relative overflow-hidden border-t border-gray">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-cover bg-center opacity-10 blur-sm" style={{ backgroundImage: `url(${insideImg})` }}></div>
@@ -192,8 +96,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* <Gallery /> */}
-      <Testimonials />
     </div>
   );
 };

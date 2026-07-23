@@ -30,12 +30,12 @@ const Header = () => {
       </div>
 
       {/* Main Header */}
-      <header className={`sticky top-0 w-full z-40 transition-all duration-300 ${isScrolled ? 'bg-darker/95 backdrop-blur-md shadow-lg py-2' : 'bg-transparent py-3'}`}>
+      <header className={`sticky top-0 w-full z-40 transition-colors duration-300 ${isScrolled ? 'bg-darker/95 backdrop-blur-md shadow-xl border-b border-white/10' : 'bg-darker/70 backdrop-blur-sm'} py-2`}>
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
           
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 relative z-50">
-            <img src={logoImg} alt="Hibachi Coal House" className={`transition-all duration-300 object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.7)] ${isScrolled ? 'h-20' : 'h-28'}`} />
+            <img src={logoImg} alt="Hibachi Coal House" className="h-16 md:h-20 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.7)] transition-transform duration-300 hover:scale-105" />
           </Link>
 
           {/* Desktop Nav & Menu Toggle */}
@@ -109,8 +109,14 @@ const Header = () => {
         
         <div className={`absolute bottom-10 flex flex-col items-center transition-all duration-1000 delay-500 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'}`}>
            <div className="flex gap-6 text-primary tracking-[0.2em] uppercase text-xs font-bold mb-4">
-             <a href="#" className="hover:text-light transition-colors">Instagram</a>
-             <a href="#" className="hover:text-light transition-colors">Facebook</a>
+             <a href="https://www.instagram.com/hibachicoalhouse/" target="_blank" rel="noopener noreferrer" className="hover:text-light transition-colors flex items-center gap-2">
+               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+               </svg>
+               <span>Instagram</span>
+             </a>
            </div>
            <div className="text-light/50 font-sans tracking-widest text-sm">Call us: 095143 11128</div>
         </div>

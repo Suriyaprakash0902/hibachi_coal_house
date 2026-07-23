@@ -1,7 +1,6 @@
 import React from 'react';
 import AboutUs from '../components/AboutUs';
 import OurStrength from '../components/OurStrength';
-import Testimonials from '../components/Testimonials';
 
 const About = () => {
   return (
@@ -18,7 +17,6 @@ const About = () => {
       </div>
       <AboutUs />
       <OurStrength />
-      <Testimonials />
     </div>
   );
 };
