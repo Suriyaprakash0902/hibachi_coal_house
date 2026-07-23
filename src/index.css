@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #FFB800;
+  --color-primary-dark: #cc9300;
+  --color-dark: #121212;
+  --color-darker: #0a0a0a;
+  --color-light: #ffffff;
+  --color-gray: #333333;
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Cinzel', serif;
+}
+
+@layer base {
+  body {
+    @apply bg-darker text-light font-sans antialiased selection:bg-primary selection:text-darker;
+  }
+}
+
+/* Custom Scrollbar for premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #121212; 
+}
+::-webkit-scrollbar-thumb {
+  background: #333333; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FFB800; 
+}
